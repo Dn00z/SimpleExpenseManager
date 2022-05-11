@@ -10,6 +10,9 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        api-level: [26]
 
     steps:
     - uses: actions/checkout@v3
