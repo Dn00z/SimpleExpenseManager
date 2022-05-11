@@ -25,10 +25,6 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
-
-      - name: Local unit tests
-        run: ./gradlew test --info --stacktrace
-
       - name: Instrumentation tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
