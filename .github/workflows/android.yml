@@ -10,6 +10,9 @@ jobs:
   build:
 
     runs-on: macos-latest
+    strategy:
+      matrix:
+        api-level: [26]
 
     steps:
       - uses: actions/checkout@v3
@@ -25,8 +28,8 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
-      - name: Instrumentation tests
+      - name: run tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 28
+          api-level: ${{ matrix.api-level }}
           script: ./gradlew connectedAndroidTest
