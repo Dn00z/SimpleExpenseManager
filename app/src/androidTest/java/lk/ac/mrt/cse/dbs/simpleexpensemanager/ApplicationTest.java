@@ -49,14 +49,14 @@ public class ApplicationTest {
         DatabaseHelper.createDatabaseHelperInstance(context);
         expenseManager = new PersistentDemoExpenseManager();
     }
-
+//unit test for adding new account to the database and get account details from the database
     @Test
     public void testAddAccount() {
         expenseManager.addAccount("000123", "BOC", "Dasun", 10000);
         List<String> accountNumbers = expenseManager.getAccountNumbersList();
         assertTrue(accountNumbers.contains("000123"));
     }
-
+//unit test for logging new transaction to the database and get the transaction list form the database
     @Test
     public void testLogTransaction() {
         expenseManager.addAccount("001234", "HNB", "Nimantha", 20000);
