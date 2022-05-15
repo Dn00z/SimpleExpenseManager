@@ -16,11 +16,12 @@
 
 package lk.ac.mrt.cse.dbs.simpleexpensemanager;
 
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import android.app.Application;
 import android.content.Context;
+import android.test.ApplicationTestCase;
 
 import androidx.test.core.app.ApplicationProvider;
 
@@ -33,7 +34,6 @@ import lk.ac.mrt.cse.dbs.simpleexpensemanager.control.ExpenseManager;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.control.PersistentDemoExpenseManager;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.database.DatabaseHelper;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.exception.InvalidAccountException;
-import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.Account;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.ExpenseType;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.Transaction;
 
@@ -41,7 +41,6 @@ import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.Transaction;
  * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
  */
 public class ApplicationTest {
-
     private ExpenseManager expenseManager;
 
     @Before
@@ -52,32 +51,22 @@ public class ApplicationTest {
     }
 
     @Test
-    public void testCreateAccount() {
-        //add data into the database
-        expenseManager.addAccount("00123456", "BOC", "Dasun", 10000.67);
-        //retrieve data from the database
-        List<String> accountNoList = expenseManager.getAccountNumbersList();
-        assertTrue(accountNoList.contains("00123456"));
-
+    public void testAddAccount() {
+        expenseManager.addAccount("000123", "BOC", "Dasun", 10000);
+        List<String> accountNumbers = expenseManager.getAccountNumbersList();
+        assertTrue(accountNumbers.contains("000123"));
     }
 
     @Test
     public void testLogTransaction() {
-        //add data into the database
-        expenseManager.addAccount("01234567", "HNB", "Disal", 10000);
-        List<Transaction> beforeTransactionList = expenseManager.getTransactionsDAO().getAllTransactionLogs();
-
+        expenseManager.addAccount("001234", "HNB", "Nimantha", 20000);
+        List<Transaction> beforeTransactions = expenseManager.getTransactionsDAO().getAllTransactionLogs();
         try {
-            expenseManager.updateAccountBalance("01234567", 10, 5, 2022, ExpenseType.INCOME, "2000");
-
+            expenseManager.updateAccountBalance("001234", 10, 5, 2022, ExpenseType.INCOME, "2500");
         } catch (InvalidAccountException e) {
             e.printStackTrace();
         }
-        List<Transaction> afterTransactionList = expenseManager.getTransactionsDAO().getAllTransactionLogs();
-        assertEquals(beforeTransactionList.size() + 1, afterTransactionList.size());
+        List<Transaction> afterTransactions = expenseManager.getTransactionsDAO().getAllTransactionLogs();
+        assertEquals(beforeTransactions.size() + 1, afterTransactions.size());
     }
-
-
-
-
 }
